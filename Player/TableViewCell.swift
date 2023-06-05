@@ -10,7 +10,7 @@ import UIKit
 class TableViewCell: UITableViewCell {
     
     static var reusedId = "InstallCell"
-    private let posterImageView = UIImageView()
+    let posterImageView = UIImageView()
     var trackName = UILabel()
     var artistName = UILabel()
     
@@ -29,10 +29,9 @@ class TableViewCell: UITableViewCell {
         addSubview(posterImageView)
         posterImageView.translatesAutoresizingMaskIntoConstraints = false
         posterImageView.layer.cornerRadius = 40
-        posterImageView.backgroundColor = .black
-        posterImageView.contentMode = .scaleAspectFill
+        posterImageView.contentMode = .scaleAspectFit
         posterImageView.clipsToBounds = true
-
+        
         [posterImageView.topAnchor.constraint(equalTo: topAnchor,constant: 5),
          posterImageView.leftAnchor.constraint(equalTo: leftAnchor,constant: 10),
          posterImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -43,9 +42,8 @@ class TableViewCell: UITableViewCell {
     private func  setupTrackName() {
         addSubview(trackName)
         trackName.translatesAutoresizingMaskIntoConstraints = false
-        trackName.text = "Track"
-        trackName.font = UIFont.systemFont(ofSize: 25)
-
+        trackName.font = UIFont(name: "Helvetrica-Bold", size: 24)
+        
         
         [trackName.topAnchor.constraint(equalTo: topAnchor, constant: 13),
          trackName.leftAnchor.constraint(equalTo: posterImageView.rightAnchor, constant: 20)].forEach { $0.isActive = true }
@@ -54,7 +52,6 @@ class TableViewCell: UITableViewCell {
     private func setupArtistName() {
         addSubview(artistName)
         artistName.translatesAutoresizingMaskIntoConstraints = false
-        artistName.text = "ArtistName"
         artistName.font = UIFont.systemFont(ofSize: 13)
         
         [artistName.topAnchor.constraint(equalTo: trackName.bottomAnchor),
