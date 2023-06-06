@@ -7,12 +7,6 @@
 
 import UIKit
 
-struct Song {
-    let trackName: String
-    let artistName: String
-    let posterName: String
-}
-
 class MusicListViewController: UIViewController {
     
     var table = UITableView()
@@ -29,24 +23,23 @@ class MusicListViewController: UIViewController {
         configureSongs()
     }
     
-    func configureSongs() {
-        songs.append(Song(trackName: "Beauty", artistName: "ROCKET", posterName: "Andy"))
-        songs.append(Song(trackName: "Universal", artistName: "Mr.Crow",posterName: "Grace"))
-        songs.append(Song(trackName: "It's Only Image", artistName: "Move", posterName: "True"))
-    }
-    
     func setupTebleView() {
         view.addSubview(table)
         table.translatesAutoresizingMaskIntoConstraints = false
         table.delegate = self
         table.dataSource = self
         table.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.reusedId)
-
         
         [table.topAnchor.constraint(equalTo: view.topAnchor),
          table.leftAnchor.constraint(equalTo: view.leftAnchor),
          table.rightAnchor.constraint(equalTo: view.rightAnchor),
          table.bottomAnchor.constraint(equalTo: view.bottomAnchor)].forEach{ $0.isActive = true }
+    }
+    
+    func configureSongs() {
+        songs.append(Song(trackName: "Beauty", artistName: "ROCKET", posterName: "Andy"))
+        songs.append(Song(trackName: "Universal", artistName: "Mr.Crow",posterName: "Grace"))
+        songs.append(Song(trackName: "It's Only Image", artistName: "Move", posterName: "True"))
     }
 }
 
@@ -64,11 +57,13 @@ extension MusicListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.posterImageView.image = UIImage(named: posterName)
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let song = songs[indexPath.row] else { return }
         let audioVC = AudioPlayer(songs: song)
+        audioVC.modalPresentationStyle = .fullScreen
         present(audioVC, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-    
 }
 
