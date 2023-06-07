@@ -20,12 +20,13 @@ class AudioPlayer: UIViewController {
     private var timeLabel = UILabel()
     private let backButton = UIButton()
     private let timeLeftLabel = UILabel()
+    private let arraySong = ["Beauty","It's Only Image","Universal"]
     
     var song: Song
     var player: AVPlayer!
     
-    init(songs: Song) {
-        self.song = songs
+    init(song: Song) {
+        self.song = song
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -137,11 +138,11 @@ class AudioPlayer: UIViewController {
         
         stackView.addArrangedSubview(pauseButton)
         pauseButton.setImage(UIImage(named: "pause.circle.fill"), for: .normal)
+        pauseButton.addTarget(self, action: #selector(pauseButtonAction), for: .touchUpInside)
         
         stackView.addArrangedSubview(forwardButton)
         forwardButton.setImage(UIImage(named: "forward.end.fill"), for: .normal)
-        
-        pauseButton.addTarget(self, action: #selector(pauseButtonAction), for: .touchUpInside)
+        forwardButton.addTarget(self, action: #selector(forwardButtonAction), for: .touchUpInside)
     }
     
     @objc private func pauseButtonAction() {
@@ -155,9 +156,17 @@ class AudioPlayer: UIViewController {
         }
     }
     
+    @objc func forwardButtonAction() {
+        player.pause()
+        guard let audio = Bundle.main.path(forResource: arraySong[0], ofType: "mp3") else { return }
+        player = AVPlayer(url: URL(fileURLWithPath: audio))
+        player.play()
+    }
+    
     private func settingPlayer() {
         view.backgroundColor = .white
-        player = AVPlayer(url: URL(fileURLWithPath: Bundle.main.path(forResource: song.trackName, ofType: "mp3")!))
+        guard let audio = Bundle.main.path(forResource: song.trackName, ofType: "mp3") else { return }
+        player = AVPlayer(url: URL(fileURLWithPath: audio))
         player.play()
         player.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 1000), queue: DispatchQueue.main) { time in
             let totalSeconds = Int(time.seconds)

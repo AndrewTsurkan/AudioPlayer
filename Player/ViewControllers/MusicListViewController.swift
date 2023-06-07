@@ -60,7 +60,7 @@ extension MusicListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let song = songs[indexPath.row] else { return }
-        let audioVC = AudioPlayer(songs: song)
+        let audioVC = AudioPlayer(song: song)
         audioVC.modalPresentationStyle = .fullScreen
         present(audioVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
