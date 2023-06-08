@@ -195,18 +195,7 @@ class AudioPlayer: UIViewController {
             let allTimeSeconds = Int(CMTimeGetSeconds(timeTrack))
             self?.timeLeftLabel.text = self?.timeConversion(allTimeSeconds)
             self?.slider.maximumValue = Float(CMTimeGetSeconds(timeTrack))
-            if totalSeconds == allTimeSeconds {
-                guard let song = self?.delegate?.nextSong() else { return }
-                self?.song = song
-                self?.player?.pause()
-                self?.installSubview()
-                if let observer = self?.observer! {
-                    self?.player?.removeTimeObserver(observer)
-                }
-            
-                self?.player = nil
-                self?.playSong()
-            }
+            self?.forwardButtonAction()
         }
     }
     
@@ -232,7 +221,7 @@ class AudioPlayer: UIViewController {
          timeLeftLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10)].forEach { $0.isActive = true }
     }
     
-   private func installSubview() {
+    private func installSubview() {
         imageView.image = UIImage(named: song.posterName)
         trackName.text = song.trackName
         artistName.text = song.artistName
