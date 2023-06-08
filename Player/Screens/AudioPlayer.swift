@@ -195,7 +195,9 @@ class AudioPlayer: UIViewController {
             let allTimeSeconds = Int(CMTimeGetSeconds(timeTrack))
             self?.timeLeftLabel.text = self?.timeConversion(allTimeSeconds)
             self?.slider.maximumValue = Float(CMTimeGetSeconds(timeTrack))
-            self?.forwardButtonAction()
+            if allTimeSeconds == totalSeconds {
+                self?.forwardButtonAction()
+            }
         }
     }
     
