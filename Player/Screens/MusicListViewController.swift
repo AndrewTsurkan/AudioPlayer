@@ -9,8 +9,9 @@ import UIKit
 
 class MusicListViewController: UIViewController {
     
-    var table = UITableView()
-    var songs = [Song?]()
+   private var table = UITableView()
+    var songs = [Song]()
+    var currentSongIndex: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,11 +20,11 @@ class MusicListViewController: UIViewController {
         title = "Music"
         navigationController?.navigationBar.prefersLargeTitles = true
 
-        setupTebleView()
+        setupTableView()
         configureSongs()
     }
     
-    func setupTebleView() {
+    func setupTableView() {
         view.addSubview(table)
         table.translatesAutoresizingMaskIntoConstraints = false
         table.delegate = self
@@ -37,9 +38,9 @@ class MusicListViewController: UIViewController {
     }
     
     func configureSongs() {
-        songs.append(Song(trackName: "Beauty", artistName: "ROCKET", posterName: "Andy"))
-        songs.append(Song(trackName: "Universal", artistName: "Mr.Crow",posterName: "Grace"))
-        songs.append(Song(trackName: "It's Only Image", artistName: "Move", posterName: "True"))
+        songs.append(Song(trackName: "Beauty", artistName: "ROCKET", posterName: "0"))
+        songs.append(Song(trackName: "Last Day", artistName: "Mr.Crow",posterName: "1"))
+        songs.append(Song(trackName: "it's Only", artistName: "Move", posterName: "2"))
     }
 }
 
@@ -50,20 +51,49 @@ extension MusicListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.reusedId, for: indexPath) as? TableViewCell else { return UITableViewCell() }
-        let playList = songs[indexPath.row]
-        cell.trackName.text = playList?.trackName
-        cell.artistName.text = playList?.artistName
-        guard let posterName = playList?.posterName else { return cell }
+        let song = songs[indexPath.row]
+        cell.trackName.text = song.trackName
+        cell.artistName.text = song.artistName
+        let posterName = song.posterName
         cell.posterImageView.image = UIImage(named: posterName)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let song = songs[indexPath.row] else { return }
+        let song = songs[indexPath.row]
         let audioVC = AudioPlayer(song: song)
         audioVC.modalPresentationStyle = .fullScreen
+        audioVC.delegate = self
         present(audioVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
+        currentSongIndex = indexPath.row
+        
+    }
+}
+
+extension MusicListViewController: AudioPlayerDelegate {
+    func nextSong() -> Song? {
+        guard var currentSongIndex else { return nil}
+        if currentSongIndex == songs.count - 1  {
+            currentSongIndex = 0
+            self.currentSongIndex = currentSongIndex
+        }else {
+            currentSongIndex += 1
+            self.currentSongIndex = currentSongIndex
+        }
+        return songs[currentSongIndex]
+    }
+    
+    func backSong() -> Song? {
+        guard var currentSongIndex else { return nil}
+        if currentSongIndex == 0 {
+            currentSongIndex = songs.count - 1
+            self.currentSongIndex = currentSongIndex
+        }else{
+            currentSongIndex -= 1
+            self.currentSongIndex = currentSongIndex
+            }
+        return songs[currentSongIndex]
     }
 }
 

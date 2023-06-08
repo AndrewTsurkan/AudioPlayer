@@ -15,15 +15,17 @@ class AudioPlayer: UIViewController {
     private let forwardButton = UIButton()
     private let backwardButton = UIButton()
     private let slider = UISlider()
-    private var trackName = UILabel()
-    private var artistName = UILabel()
-    private var timeLabel = UILabel()
+    private let trackName = UILabel()
+    private let artistName = UILabel()
+    private let timeLabel = UILabel()
     private let backButton = UIButton()
     private let timeLeftLabel = UILabel()
-    private let arraySong = ["Beauty","It's Only Image","Universal"]
+    var observer: Any?
+    
+    weak var delegate: AudioPlayerDelegate?
     
     var song: Song
-    var player: AVPlayer!
+    var player: AVPlayer?
     
     init(song: Song) {
         self.song = song
@@ -43,9 +45,10 @@ class AudioPlayer: UIViewController {
         setupSlider()
         setupStackView()
         setupButtons()
-        settingPlayer()
+        playSong()
         setupTimeLabel()
         setupTimeLeftLabel()
+        installSubview()
         view.backgroundColor = UIColor(named: "background")
     }
     
@@ -72,7 +75,6 @@ class AudioPlayer: UIViewController {
         view.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 14
-        imageView.image = UIImage(named: song.posterName)
         
         [imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
          imageView.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 30),
@@ -84,7 +86,6 @@ class AudioPlayer: UIViewController {
         view.addSubview(trackName)
         trackName.translatesAutoresizingMaskIntoConstraints = false
         trackName.font = UIFont(name: "Helvetrica-Bold", size: 24)
-        trackName.text = song.trackName
         trackName.textColor = .white
         
         [trackName.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 13),
@@ -95,7 +96,6 @@ class AudioPlayer: UIViewController {
         view.addSubview(artistName)
         artistName.translatesAutoresizingMaskIntoConstraints = false
         artistName.font = UIFont.systemFont(ofSize: 13)
-        artistName.text = song.artistName
         artistName.textColor = UIColor(named: "artistNameColor")
         
         [artistName.topAnchor.constraint(equalTo: trackName.bottomAnchor,constant: 5),
@@ -117,7 +117,7 @@ class AudioPlayer: UIViewController {
     }
     
     @objc private func sliderAction(_ sender: UISlider) {
-        player.seek(to: CMTime(seconds: Double(slider.value), preferredTimescale: 1000))
+        player?.seek(to: CMTime(seconds: Double(slider.value), preferredTimescale: 1000))
     }
     
     private func setupStackView() {
@@ -135,6 +135,7 @@ class AudioPlayer: UIViewController {
     private func setupButtons() {
         stackView.addArrangedSubview(backwardButton)
         backwardButton.setImage(UIImage(named: "backward.end.fill" ), for: .normal)
+        backwardButton.addTarget(self, action: #selector(backwardButtonAction), for: .touchUpInside)
         
         stackView.addArrangedSubview(pauseButton)
         pauseButton.setImage(UIImage(named: "pause.circle.fill"), for: .normal)
@@ -146,36 +147,54 @@ class AudioPlayer: UIViewController {
     }
     
     @objc private func pauseButtonAction() {
-        if player.timeControlStatus == .playing {
+        if player?.timeControlStatus == .playing {
             pauseButton.setImage(UIImage(named: "play.circle.fill"), for: .normal)
-            player.pause()
+            player?.pause()
         }else {
             pauseButton.setImage(UIImage(named: "pause.circle.fill"), for: .normal)
             
-            player.play()
+            player?.play()
         }
     }
     
-    @objc func forwardButtonAction() {
-        player.pause()
-        guard let audio = Bundle.main.path(forResource: arraySong[0], ofType: "mp3") else { return }
-        player = AVPlayer(url: URL(fileURLWithPath: audio))
-        player.play()
+    @objc  private func  backwardButtonAction() {
+        guard let song = delegate?.backSong() else { return }
+        self.song = song
+        player?.pause()
+        installSubview()
+        if let observer {
+            player?.removeTimeObserver(observer)
+        }
+        
+        player = nil
+        playSong()
     }
     
-    private func settingPlayer() {
-        view.backgroundColor = .white
+    @objc  private func forwardButtonAction() {
+        guard let song = delegate?.nextSong() else { return }
+        self.song = song
+        player?.pause()
+        installSubview()
+        if let observer {
+            player?.removeTimeObserver(observer)
+        }
+        
+        player = nil
+        playSong()
+    }
+    
+    private func playSong() {
         guard let audio = Bundle.main.path(forResource: song.trackName, ofType: "mp3") else { return }
         player = AVPlayer(url: URL(fileURLWithPath: audio))
-        player.play()
-        player.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 1000), queue: DispatchQueue.main) { time in
+        player?.play()
+        observer = player?.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 1000), queue: DispatchQueue.main) { [weak self] time in
             let totalSeconds = Int(time.seconds)
-            self.timeLabel.text = self.timeConversion(totalSeconds)
-            self.slider.value = Float(time.seconds)
-            guard let timeTrack = self.player.currentItem?.duration else { return }
+            self?.timeLabel.text = self?.timeConversion(totalSeconds)
+            self?.slider.value = Float(time.seconds)
+            guard let timeTrack = self?.player?.currentItem?.duration else { return }
             let allTimeSeconds = Int(CMTimeGetSeconds(timeTrack))
-            self.timeLeftLabel.text = self.timeConversion(allTimeSeconds)
-            self.slider.maximumValue = Float(CMTimeGetSeconds(timeTrack))
+            self?.timeLeftLabel.text = self?.timeConversion(allTimeSeconds)
+            self?.slider.maximumValue = Float(CMTimeGetSeconds(timeTrack))
         }
     }
     
@@ -199,6 +218,12 @@ class AudioPlayer: UIViewController {
         [timeLeftLabel.topAnchor.constraint(equalTo: artistName.bottomAnchor, constant: 19),
          timeLeftLabel.leftAnchor.constraint(equalTo: slider.rightAnchor, constant: 5),
          timeLeftLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10)].forEach { $0.isActive = true }
+    }
+    
+   private func installSubview() {
+        imageView.image = UIImage(named: song.posterName)
+        trackName.text = song.trackName
+        artistName.text = song.artistName
     }
     
     private func timeConversion(_ allSeconds: Int) -> String {

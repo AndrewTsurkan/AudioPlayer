@@ -12,12 +12,14 @@
 		5CA5AA8C2A2DDFC600F23F75 /* MusicListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA5AA8B2A2DDFC600F23F75 /* MusicListViewController.swift */; };
 		5CA5AA942A2DDFC700F23F75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CA5AA932A2DDFC700F23F75 /* Assets.xcassets */; };
 		5CA5AA972A2DDFC700F23F75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CA5AA952A2DDFC700F23F75 /* LaunchScreen.storyboard */; };
-		5CA5AA9F2A2DE45800F23F75 /* It's Only Image.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5CA5AA9E2A2DE45800F23F75 /* It's Only Image.mp3 */; };
+		5CA5AA9F2A2DE45800F23F75 /* Last Day.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5CA5AA9E2A2DE45800F23F75 /* Last Day.mp3 */; };
 		5CA5AAA12A2DE53F00F23F75 /* Beauty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5CA5AAA02A2DE53F00F23F75 /* Beauty.mp3 */; };
-		5CA5AAA32A2DE54800F23F75 /* Universal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5CA5AAA22A2DE54800F23F75 /* Universal.mp3 */; };
+		5CA5AAA32A2DE54800F23F75 /* it's Only.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5CA5AAA22A2DE54800F23F75 /* it's Only.mp3 */; };
 		5CA5AAA62A2DE78F00F23F75 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA5AAA52A2DE78F00F23F75 /* AudioPlayer.swift */; };
 		5CA5AAA82A2DE96600F23F75 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA5AAA72A2DE96600F23F75 /* TableViewCell.swift */; };
-		5CA5AAAA2A2FA45200F23F75 /* SupportingFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA5AAA92A2FA45200F23F75 /* SupportingFile.swift */; };
+		5CA5AAAA2A2FA45200F23F75 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA5AAA92A2FA45200F23F75 /* Song.swift */; };
+		5CA5AAAD2A3146AB00F23F75 /* UIViewController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA5AAAC2A3146AB00F23F75 /* UIViewController+extension.swift */; };
+		5CA5AAAF2A31479300F23F75 /* AudioPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA5AAAE2A31479300F23F75 /* AudioPlayerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,12 +30,14 @@
 		5CA5AA932A2DDFC700F23F75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CA5AA962A2DDFC700F23F75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5CA5AA982A2DDFC700F23F75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5CA5AA9E2A2DE45800F23F75 /* It's Only Image.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "It's Only Image.mp3"; sourceTree = "<group>"; };
+		5CA5AA9E2A2DE45800F23F75 /* Last Day.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Last Day.mp3"; sourceTree = "<group>"; };
 		5CA5AAA02A2DE53F00F23F75 /* Beauty.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Beauty.mp3; sourceTree = "<group>"; };
-		5CA5AAA22A2DE54800F23F75 /* Universal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Universal.mp3; sourceTree = "<group>"; };
+		5CA5AAA22A2DE54800F23F75 /* it's Only.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "it's Only.mp3"; sourceTree = "<group>"; };
 		5CA5AAA52A2DE78F00F23F75 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		5CA5AAA72A2DE96600F23F75 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		5CA5AAA92A2FA45200F23F75 /* SupportingFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportingFile.swift; sourceTree = "<group>"; };
+		5CA5AAA92A2FA45200F23F75 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		5CA5AAAC2A3146AB00F23F75 /* UIViewController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extension.swift"; sourceTree = "<group>"; };
+		5CA5AAAE2A31479300F23F75 /* AudioPlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,9 +72,10 @@
 			children = (
 				5CA5AA892A2DDFC600F23F75 /* SceneDelegate.swift */,
 				5CA5AA872A2DDFC600F23F75 /* AppDelegate.swift */,
-				5CA5AAA92A2FA45200F23F75 /* SupportingFile.swift */,
-				5CA5AAA42A2DE54C00F23F75 /* Music */,
-				5CA5AAAB2A2FA48600F23F75 /* ViewControllers */,
+				5CA5AAA92A2FA45200F23F75 /* Song.swift */,
+				5CA5AAAC2A3146AB00F23F75 /* UIViewController+extension.swift */,
+				5CA5AAA42A2DE54C00F23F75 /* MP3s */,
+				5CA5AAAB2A2FA48600F23F75 /* Screens */,
 				5CA5AAA72A2DE96600F23F75 /* TableViewCell.swift */,
 				5CA5AA932A2DDFC700F23F75 /* Assets.xcassets */,
 				5CA5AA952A2DDFC700F23F75 /* LaunchScreen.storyboard */,
@@ -79,23 +84,24 @@
 			path = Player;
 			sourceTree = "<group>";
 		};
-		5CA5AAA42A2DE54C00F23F75 /* Music */ = {
+		5CA5AAA42A2DE54C00F23F75 /* MP3s */ = {
 			isa = PBXGroup;
 			children = (
 				5CA5AAA02A2DE53F00F23F75 /* Beauty.mp3 */,
-				5CA5AA9E2A2DE45800F23F75 /* It's Only Image.mp3 */,
-				5CA5AAA22A2DE54800F23F75 /* Universal.mp3 */,
+				5CA5AA9E2A2DE45800F23F75 /* Last Day.mp3 */,
+				5CA5AAA22A2DE54800F23F75 /* it's Only.mp3 */,
 			);
-			path = Music;
+			path = MP3s;
 			sourceTree = "<group>";
 		};
-		5CA5AAAB2A2FA48600F23F75 /* ViewControllers */ = {
+		5CA5AAAB2A2FA48600F23F75 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
 				5CA5AA8B2A2DDFC600F23F75 /* MusicListViewController.swift */,
 				5CA5AAA52A2DE78F00F23F75 /* AudioPlayer.swift */,
+				5CA5AAAE2A31479300F23F75 /* AudioPlayerDelegate.swift */,
 			);
-			path = ViewControllers;
+			path = Screens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,10 +163,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CA5AAA12A2DE53F00F23F75 /* Beauty.mp3 in Resources */,
-				5CA5AA9F2A2DE45800F23F75 /* It's Only Image.mp3 in Resources */,
+				5CA5AA9F2A2DE45800F23F75 /* Last Day.mp3 in Resources */,
 				5CA5AA972A2DDFC700F23F75 /* LaunchScreen.storyboard in Resources */,
 				5CA5AA942A2DDFC700F23F75 /* Assets.xcassets in Resources */,
-				5CA5AAA32A2DE54800F23F75 /* Universal.mp3 in Resources */,
+				5CA5AAA32A2DE54800F23F75 /* it's Only.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,11 +177,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CA5AAAA2A2FA45200F23F75 /* SupportingFile.swift in Sources */,
+				5CA5AAAA2A2FA45200F23F75 /* Song.swift in Sources */,
 				5CA5AAA82A2DE96600F23F75 /* TableViewCell.swift in Sources */,
 				5CA5AA8C2A2DDFC600F23F75 /* MusicListViewController.swift in Sources */,
 				5CA5AA882A2DDFC600F23F75 /* AppDelegate.swift in Sources */,
+				5CA5AAAD2A3146AB00F23F75 /* UIViewController+extension.swift in Sources */,
 				5CA5AA8A2A2DDFC600F23F75 /* SceneDelegate.swift in Sources */,
+				5CA5AAAF2A31479300F23F75 /* AudioPlayerDelegate.swift in Sources */,
 				5CA5AAA62A2DE78F00F23F75 /* AudioPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,18 +1,10 @@
 //
-//  SupportingFile.swift
+//  ViewController+extension.swift
 //  Player
 //
-//  Created by Андрей Цуркан on 06.06.2023.
-//
+//  Created by Андрей Цуркан on 08.06.2023.
 
-import Foundation
 import UIKit
-
-struct Song {
-    let trackName: String
-    let artistName: String
-    let posterName: String
-}
 
 extension UIViewController {
     func hideNavigationBar() {
